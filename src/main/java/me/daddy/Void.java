@@ -11,8 +11,9 @@ public class Void extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
         plugin = this;
+
+        this.saveDefaultConfig();
 
         getServer().getPluginManager().registerEvents(new PlayerMoveListener(), this);
     }

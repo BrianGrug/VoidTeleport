@@ -30,7 +30,7 @@ public class PlayerMoveListener implements Listener {
             location.put(player.getUniqueId(), loc);
         }
 
-        if(player.getLocation().getBlockY() < 0){
+        if(player.getLocation().getBlockY() < Void.getPlugin().getConfig().getInt("Level")){
             player.teleport(location.get(player.getUniqueId()));
 
             if(Void.getPlugin().getConfig().getBoolean("Effects")){
