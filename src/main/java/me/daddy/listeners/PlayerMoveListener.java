@@ -17,25 +17,23 @@ import static org.bukkit.potion.PotionEffectType.CONFUSION;
 
 public class PlayerMoveListener implements Listener {
 
-    private HashMap<UUID, Location> location = new HashMap<>();
-
+    private Map<UUID, Location> location = new HashMap<>();
 
     @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event) {
+    public void onPlayerMove(PlayerMoveEvent event) {     
         Player player = event.getPlayer();
-
         Location loc = event.getPlayer().getLocation();
 
-        if(player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() != Material.AIR) {
+        if(loc.getBlock().getRelative(BlockFace.DOWN).getType() != Material.AIR)
             location.put(player.getUniqueId(), loc);
-        }
 
-        if(player.getLocation().getBlockY() < Void.getPlugin().getConfig().getInt("Level")){
-            player.teleport(location.get(player.getUniqueId()));
+        if(event.getFrom().getBlockY() == event.getTo().getBlockY() || loc.getBlockY() > Void.getPlugin().getConfig().getInt("Level"))
+            return;
+   
+        player.teleport(location.get(player.getUniqueId()));
 
-            if(Void.getPlugin().getConfig().getBoolean("Effects")){
-                player.addPotionEffect(new PotionEffect(CONFUSION, 200, 2));
-            }
-        }
+        if(Void.getPlugin().getConfig().getBoolean("Effects"))
+            player.addPotionEffect(new PotionEffect(CONFUSION, 200, 2));
     }
+    
 }
