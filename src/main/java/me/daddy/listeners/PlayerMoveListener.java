@@ -1,5 +1,6 @@
 package me.daddy.listeners;
 
+import lombok.Getter;
 import me.daddy.Void;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -8,33 +9,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.potion.PotionEffect;
-
-import java.util.HashMap;
-import java.util.UUID;
-
-import static org.bukkit.potion.PotionEffectType.CONFUSION;
 
 public class PlayerMoveListener implements Listener {
-
-    private HashMap<UUID, Location> location = new HashMap<>();
-
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
 
-        Location loc = event.getPlayer().getLocation();
+        Location loc2 = event.getPlayer().getLocation();
+
+        Location loc = loc2.add(0, 1, 0);
 
         if(player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() != Material.AIR) {
-            location.put(player.getUniqueId(), loc);
-        }
-
-        if(player.getLocation().getBlockY() < Void.getPlugin().getConfig().getInt("Level")){
-            player.teleport(location.get(player.getUniqueId()));
-
-            if(Void.getPlugin().getConfig().getBoolean("Effects")){
-                player.addPotionEffect(new PotionEffect(CONFUSION, 200, 2));
+            if(event.getFrom().getX() != event.getTo().getX() || event.getFrom().getZ() != event.getTo().getZ()){
+                Void.getPlugin().location.put(player.getUniqueId(), loc);
             }
         }
     }
