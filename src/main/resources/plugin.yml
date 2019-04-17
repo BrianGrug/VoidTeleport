@@ -1,3 +1,4 @@
-main: me.daddy.Void
-version: 1.0
 name: Void
+version: 1.0
+
+main: me.daddy.voidteleport.Void
