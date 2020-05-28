@@ -22,7 +22,9 @@ public class PlayerMoveListener implements Listener {
 
         if(player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() != Material.AIR) {
             if(event.getFrom().getX() != event.getTo().getX() || event.getFrom().getZ() != event.getTo().getZ()){
-                Void.getPlugin().location.put(player.getUniqueId(), loc);
+                if(Void.getPlugin().getConfig().getStringList("worlds").contains(player.getWorld().getName())) {
+                    Void.getPlugin().location.put(player.getUniqueId(), loc);
+                }
             }
         }
     }

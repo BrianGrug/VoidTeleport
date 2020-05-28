@@ -1,2 +1,4 @@
 Effects: true
 Level: 0
+worlds:
+  - "world"

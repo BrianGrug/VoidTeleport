@@ -14,16 +14,18 @@ public class EntityDamageListener implements Listener {
 
 
     @EventHandler
-    public void onEntityDamage(EntityDamageEvent event){
-        if(event.getEntity() instanceof Player){
+    public void onEntityDamage(EntityDamageEvent event) {
+        if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
 
-            if(event.getCause() == EntityDamageEvent.DamageCause.VOID) {
-                event.setCancelled(true);
-                player.teleport(Void.getPlugin().location.get(player.getUniqueId()));
+            if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
+                if (Void.getPlugin().getConfig().getStringList("worlds").contains(player.getWorld().getName())) {
+                    event.setCancelled(true);
+                    player.teleport(Void.getPlugin().location.get(player.getUniqueId()));
 
-                if (Void.getPlugin().getConfig().getBoolean("Effects")) {
-                    player.addPotionEffect(new PotionEffect(CONFUSION, 200, 2));
+                    if (Void.getPlugin().getConfig().getBoolean("Effects")) {
+                        player.addPotionEffect(new PotionEffect(CONFUSION, 200, 2));
+                    }
                 }
             }
         }
